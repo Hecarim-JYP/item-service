@@ -33,5 +33,4 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-compileJava.options.encoding='UTF-8'
-//asdasd
+compileJava.options.encoding = 'UTF-8'
