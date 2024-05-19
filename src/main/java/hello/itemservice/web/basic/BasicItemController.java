@@ -59,19 +59,35 @@ public class BasicItemController {
     public String addItemV2(@ModelAttribute("item") Item item, Model model) {
 
         itemRepository.save(item);
-        //model.addAttribute("item", item); // 자동으로 수행되기 때문에 생략이 가능.
+        /*
+            @ModelAttribute("item") Item item은 Item객체를 생성하고, 요청 파라미터의 값을
+            프로퍼티 접근법으로 입력해준다. 그리고 model.addAttribute("item", item)을 자동으로 수행해준다.
+
+            @ModelAttribute("item") Item item -> 이름을 item으로 지정.
+            model.addAttribute("item", item) -> 모델에 item 이름으로 저장.
+
+            model.addAttribute("item", item); // 자동으로 수행되기 때문에 생략이 가능.
+         */
 
         return "basic/item";
     }
 
     //@PostMapping(value = "/add")
     public String addItemV3(@ModelAttribute Item item) {
+        /*
+            @ModelAttribute에 이름을 생략할 경우 클래스명 첫글자만 소문자로 하여 등록한다.
+            ex) 클래스명이 Young 일 경우 young으로 등록. 위의 경우는 Item -> item
+         */
         itemRepository.save(item);
         return "basic/item";
     }
 
     @PostMapping(value = "/add")
     public String addItemV4(Item item) {
+        /*
+            @ModelAttribute를 생략하여 사용하면 기본형 타입일 경우 @RequestParam이 동작한다.
+            그 외에는 @ModelAttribute가 동작한다.
+         */
         itemRepository.save(item);
         return "basic/item";
     }
