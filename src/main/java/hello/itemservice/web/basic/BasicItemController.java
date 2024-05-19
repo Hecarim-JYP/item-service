@@ -92,6 +92,19 @@ public class BasicItemController {
         return "basic/item";
     }
 
+    @GetMapping(value = "/{itemId}/edit")
+    public String editForm(@PathVariable Long itemId, Model model) {
+        Item item = itemRepository.findById(itemId); // Get 요청일 때는 제품 상세보기와 거의 유사하다.
+        model.addAttribute("item", item);
+        return "basic/editForm";
+    }
+
+    @PostMapping(value = "/{itemId}/edit")
+    public String editItem(@PathVariable Long itemId, @ModelAttribute Item item) {
+        itemRepository.updateItem(itemId, item); // ModelAttribute에 item값으로 제품을 수정한다. (요청 파라미터)
+        return "redirect:/basic/items/{itemId}"; // 경로변수를 리다이렉트에도 사용할 수 있다.
+    }
+
     /**
      * 테스트용 데이터 추가
      */
