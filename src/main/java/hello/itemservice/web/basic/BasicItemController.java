@@ -82,7 +82,7 @@ public class BasicItemController {
         return "basic/item";
     }
 
-    @PostMapping(value = "/add")
+    //@PostMapping(value = "/add")
     public String addItemV4(Item item) {
         /*
             @ModelAttribute를 생략하여 사용하면 기본형 타입일 경우 @RequestParam이 동작한다.
@@ -90,6 +90,16 @@ public class BasicItemController {
          */
         itemRepository.save(item);
         return "basic/item";
+    }
+
+    @PostMapping(value = "/add")
+    public String addItemV5(Item item) {
+        /*
+            @ModelAttribute를 생략하여 사용하면 기본형 타입일 경우 @RequestParam이 동작한다.
+            그 외에는 @ModelAttribute가 동작한다.
+         */
+        itemRepository.save(item);
+        return "redirect:/basic/items/" + item.getId();
     }
 
     @GetMapping(value = "/{itemId}/edit")
