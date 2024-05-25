@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -92,7 +93,7 @@ public class BasicItemController {
         return "basic/item";
     }
 
-    @PostMapping(value = "/add")
+    //@PostMapping(value = "/add")
     public String addItemV5(Item item) {
         /*
             @ModelAttribute를 생략하여 사용하면 기본형 타입일 경우 @RequestParam이 동작한다.
@@ -100,6 +101,18 @@ public class BasicItemController {
          */
         itemRepository.save(item);
         return "redirect:/basic/items/" + item.getId();
+    }
+
+    @PostMapping(value = "/add")
+    public String addItemV6(Item item, RedirectAttributes redirectAttributes) {
+        /*
+            @ModelAttribute를 생략하여 사용하면 기본형 타입일 경우 @RequestParam이 동작한다.
+            그 외에는 @ModelAttribute가 동작한다.
+         */
+        Item saved = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", saved.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/basic/items/{itemId}";
     }
 
     @GetMapping(value = "/{itemId}/edit")
